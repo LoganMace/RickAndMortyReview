@@ -19,7 +19,6 @@ class Characters extends Component {
     axios
       .get('https://rickandmortyapi.com/api/character/')
       .then(response => {
-        console.log('response: ', response.data.results);
         this.setState({
           characters: response.data.results
         })
@@ -30,7 +29,6 @@ class Characters extends Component {
     axios
       .post('/api/people', char)
       .then((response) => {
-        console.log('response: ', response);
         this.setState({
           favorites: response.data
         })
@@ -41,7 +39,6 @@ class Characters extends Component {
     axios
       .delete(`/api/people/${id}`)
       .then((response) => {
-        console.log('response: ', response);
         this.setState({
           favorites: response.data
         })
@@ -67,8 +64,6 @@ class Characters extends Component {
 
 
   render() {
-
-    console.log(this.state);
 
     let chars = this.state.characters.filter((char) => char.name.toLowerCase().includes(this.state.search)).map((char) => {
       return(

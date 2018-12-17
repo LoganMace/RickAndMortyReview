@@ -4,12 +4,13 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       port = process.env.PORT || 3001,
       ctrl = require('./controller.js');
-const { getCharacters, getFavorites, addChar, deleteChar, updateName } = require('./controller')
+const { getCharacters, getFavorites, addChar, deleteChar, updateName, getSingle } = require('./controller')
 
 app.use(cors());
 app.use(bodyParser.json());
 
 
+app.get('/api/chars/:id', getSingle);
 app.get('/api/chars', getCharacters);
 app.get('/api/people', getFavorites);
 app.post('/api/people', addChar);

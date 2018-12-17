@@ -35,10 +35,18 @@ function updateName(req, res){
   return res.status(200).json(favorites);
 }
 
+function getSingle(req, res){
+  axios.get(`https://rickandmortyapi.com/api/character/${req.params.id}`)
+    .then(response => {
+      res.status(200).json(response.data)
+    })
+}
+
 module.exports = {
   getCharacters,
   getFavorites,
   addChar,
   deleteChar,
-  updateName
+  updateName,
+  getSingle
 }

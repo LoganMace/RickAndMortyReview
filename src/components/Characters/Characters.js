@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { connect } from 'react-redux';
-import { getChars, addFav } from '../../ducks/charReducer';
+import { getChars, addFav, getSingle } from '../../ducks/charReducer';
 
 import './Characters.css'
 
@@ -10,7 +10,7 @@ class Characters extends Component {
   constructor(){
     super();
     this.state = {
-      characters: [],
+      // characters: [],
       search: ''
     }
   }
@@ -25,15 +25,15 @@ class Characters extends Component {
     this.props.getChars()
   }
 
-  addFavorite = (char) => {
-    axios
-      .post('/api/people', char)
-      .then((response) => {
-        this.setState({
-          favorites: response.data
-        })
-      })
-  }
+  // addFavorite = (char) => {
+  //   axios
+  //     .post('/api/people', char)
+  //     .then((response) => {
+  //       this.setState({
+  //         favorites: response.data
+  //       })
+  //     })
+  // }
 
   // removeFavorite = (id) => {
   //   axios
@@ -64,12 +64,13 @@ class Characters extends Component {
 
 
   render() {
+    console.log(this.props);
 
     let chars = this.props.characters.filter((char) => char.name.toLowerCase().includes(this.state.search)).map((char) => {
       return(
         <div className='charWrapper' key={char.id}>
           <img className='charImg' src={char.image} alt={char.name}/>
-          <div className='charText'>
+          <div className='charText' onClick={() => this.props.getSingle(char.id)}>
             <h6 className='charName'><span>{char.name}</span>({char.species})</h6>
             <p>{char.origin.name}</p>
           </div>
@@ -93,4 +94,4 @@ class Characters extends Component {
 
 const mapStateToProps = state => state.chars;
 
-export default connect(mapStateToProps, { getChars, addFav })(Characters);
+export default connect(mapStateToProps, { getChars, addFav, getSingle })(Characters);

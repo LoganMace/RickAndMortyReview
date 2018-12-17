@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { getFavorites, deleteFav, updateName } from '../../ducks/favReducer';
 
 class Favorites extends Component{
 
@@ -9,6 +11,10 @@ class Favorites extends Component{
     }
   }
 
+  componentDidMount() {
+    this.props.getFavorites()
+  }
+
   changeNameHandler = (e) => {
     console.log(e.target.value);
     this.setState({
@@ -17,9 +23,9 @@ class Favorites extends Component{
   }
 
   render(){
-    console.log(this.state);
+    console.log(this.props);
 
-    let favs = this.props.favorites.map((char) => {
+    let favs = this.props.favs.favorites.map((char) => {
       return (
         <div className='charWrapper' key={char.id}>
           <img className='charImg' src={char.image} alt={char.name}/>
@@ -30,11 +36,11 @@ class Favorites extends Component{
               <input type="text" onChange={this.changeNameHandler}/>
             </form>
           </div>
-          <button className='addBtn' onClick={() => this.props.removeFavorite(char.id)}>-</button>
+          <button className='addBtn' onClick={() => this.props.deleteFav(char.id)}>-</button>
         </div>
       )
     })
-  
+    
     return (
       <div className='charPage'>
         {favs}
@@ -43,4 +49,7 @@ class Favorites extends Component{
   }
 };
 
-export default Favorites;
+
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps, { getFavorites, deleteFav, updateName })(Favorites);

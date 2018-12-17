@@ -1,0 +1,27 @@
+nav {
+  height: 50px;
+  width: 100%;
+  background-color: #93E421;
+  z-index: 10;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.nav-link {
+  color: black;
+  list-style: none;
+  font-weight: bolder;
+  line-height: 51px;
+  padding: 0 20px;
+}
+
+.nav-link:hover {
+  background-color: #18C20B;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}

@@ -4,15 +4,17 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       port = process.env.PORT || 3001,
       ctrl = require('./controller.js');
+const { getCharacters, getFavorites, addChar, deleteChar, updateName } = require('./controller')
 
 app.use(cors());
 app.use(bodyParser.json());
 
 
-app.get('/api/people', ctrl.getFavorites);
-app.post('/api/people', ctrl.addChar);
-app.delete('/api/people/:id', ctrl.deleteChar);
-app.put('/api/people/:id', ctrl.updateName);
+app.get('/api/chars', getCharacters);
+app.get('/api/people', getFavorites);
+app.post('/api/people', addChar);
+app.delete('/api/people/:id', deleteChar);
+app.put('/api/people/:id', updateName);
 
 
 app.listen(port, ()=> console.log(`Listening on port ${port}`));

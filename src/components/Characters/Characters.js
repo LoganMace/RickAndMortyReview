@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Favorites from './Favorites/Favorites';
 
 import './Characters.css'
 
@@ -10,17 +9,15 @@ class Characters extends Component {
     super();
     this.state = {
       characters: [],
-      favorites: [],
       search: ''
     }
   }
 
   componentDidMount(){
-    axios
-      .get('https://rickandmortyapi.com/api/character/')
+    axios.get('api/chars')
       .then(response => {
         this.setState({
-          characters: response.data.results
+          characters: response.data
         })
       })
   }
@@ -35,15 +32,15 @@ class Characters extends Component {
       })
   }
 
-  removeFavorite = (id) => {
-    axios
-      .delete(`/api/people/${id}`)
-      .then((response) => {
-        this.setState({
-          favorites: response.data
-        })
-      })
-  }
+  // removeFavorite = (id) => {
+  //   axios
+  //     .delete(`/api/people/${id}`)
+  //     .then((response) => {
+  //       this.setState({
+  //         favorites: response.data
+  //       })
+  //     })
+  // }
 
   updateName = (id, name, event) => {
     event.preventDefault();
@@ -81,16 +78,6 @@ class Characters extends Component {
 
     return (
       <div>
-        <h1>Favorites:</h1>
-        <Favorites 
-          favorites={this.state.favorites}
-          removeFavorite={this.removeFavorite}
-          updateName={this.updateName}
-        />
-        <br/>
-        <br/>
-        <br/>
-        <br/>
         <h1>Characters:</h1>
         <input type="text" placeholder='Search...' value={this.state.search} onChange={this.searchHandler}/>
         <div className='charPage'>

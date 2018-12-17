@@ -25,7 +25,7 @@ class Favorites extends Component{
   render(){
     console.log(this.props);
 
-    let favs = this.props.favs.favorites.map((char) => {
+    let favs = this.props.favorites.map((char) => {
       return (
         <div className='charWrapper' key={char.id}>
           <img className='charImg' src={char.image} alt={char.name}/>
@@ -50,6 +50,6 @@ class Favorites extends Component{
 };
 
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.favs;
 
 export default connect(mapStateToProps, { getFavorites, deleteFav, updateName })(Favorites);

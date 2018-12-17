@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { getChars, addFav } from '../../ducks/charReducer';
 
 import './Characters.css'
 
@@ -14,12 +16,13 @@ class Characters extends Component {
   }
 
   componentDidMount(){
-    axios.get('api/chars')
-      .then(response => {
-        this.setState({
-          characters: response.data
-        })
-      })
+    // axios.get('api/chars')
+    //   .then(response => {
+    //     this.setState({
+    //       characters: response.data
+    //     })
+    //   })
+    this.props.getChars()
   }
 
   addFavorite = (char) => {
@@ -42,16 +45,16 @@ class Characters extends Component {
   //     })
   // }
 
-  updateName = (id, name, event) => {
-    event.preventDefault();
-    axios
-      .put(`/api/people/${id}`, {name})
-      .then((response) => {
-        this.setState({
-          favorites: response.data
-        })
-      })
-  }
+  // updateName = (id, name, event) => {
+  //   event.preventDefault();
+  //   axios
+  //     .put(`/api/people/${id}`, {name})
+  //     .then((response) => {
+  //       this.setState({
+  //         favorites: response.data
+  //       })
+  //     })
+  // }
 
   searchHandler = (e) => {
     this.setState({
@@ -62,7 +65,7 @@ class Characters extends Component {
 
   render() {
 
-    let chars = this.state.characters.filter((char) => char.name.toLowerCase().includes(this.state.search)).map((char) => {
+    let chars = this.props.characters.filter((char) => char.name.toLowerCase().includes(this.state.search)).map((char) => {
       return(
         <div className='charWrapper' key={char.id}>
           <img className='charImg' src={char.image} alt={char.name}/>
@@ -70,7 +73,7 @@ class Characters extends Component {
             <h6 className='charName'><span>{char.name}</span>({char.species})</h6>
             <p>{char.origin.name}</p>
           </div>
-          <button className='addBtn' onClick={() => this.addFavorite(char)}>+</button>
+          <button className='addBtn' onClick={() => this.props.addFav(char)}>+</button>
         </div>
       )  
     })
@@ -88,4 +91,6 @@ class Characters extends Component {
   }
 }
 
-export default Characters;
+const mapStateToProps = state => state.chars;
+
+export default connect(mapStateToProps, { getChars, addFav })(Characters);

@@ -13,15 +13,16 @@ export function getFavorites() {
 
 export function deleteFav(id) {
   return {
-    type: GET_FAVORITES,
+    type: DELETE_FAV,
     payload: axios.delete(`/api/people/${id}`)
   };
 };
 
-export function updateName() {
+export function updateName(id, name, e) {
+  e.preventDefault();
   return {
-    type: GET_FAVORITES,
-    payload: axios.get()
+    type: UPDATE_NAME,
+    payload: axios.put(`/api/people/${id}`, {name})
   };
 };
 

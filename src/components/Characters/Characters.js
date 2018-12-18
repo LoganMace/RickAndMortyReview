@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getChars, addFav, getSingle } from '../../ducks/charReducer';
 
@@ -70,10 +71,12 @@ class Characters extends Component {
       return(
         <div className='charWrapper' key={char.id}>
           <img className='charImg' src={char.image} alt={char.name}/>
-          <div className='charText' onClick={() => this.props.getSingle(char.id)}>
-            <h6 className='charName'><span>{char.name}</span>({char.species})</h6>
-            <p>{char.origin.name}</p>
-          </div>
+          <Link to={`/char/${char.id}`}>
+            <div className='charText'>
+              <h6 className='charName'><span>{char.name}</span>({char.species})</h6>
+              <p>{char.origin.name}</p>
+            </div>
+          </Link>
           <button className='addBtn' onClick={() => this.props.addFav(char)}>+</button>
         </div>
       )  
